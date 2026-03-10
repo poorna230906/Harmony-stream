@@ -1,0 +1,48 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">🎵</div>
+    <h1>Sign in to Harmony Stream</h1>
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+      <div class="form-field">
+        <label>Email address</label>
+        <input
+          type="email" name="email" [(ngModel)]="email"
+          required email class="form-input"
+          placeholder="name@example.com"
+          #emailRef="ngModel"
+        />
+        @if (emailRef.invalid && emailRef.touched) {
+          <div class="error-msg">
+            @if (emailRef.errors?.['required']) { Email is required. }
+            @if (emailRef.errors?.['email']) { Enter a valid email. }
+          </div>
+        }
+      </div>
+
+      <div class="form-field">
+        <label>Password</label>
+        <input
+          type="password" name="password" [(ngModel)]="password"
+          required minlength="6" class="form-input"
+          placeholder="Enter password"
+          #passRef="ngModel"
+        />
+        @if (passRef.invalid && passRef.touched) {
+          <div class="error-msg">
+            @if (passRef.errors?.['required']) { Password is required. }
+            @if (passRef.errors?.['minlength']) { At least 6 characters. }
+          </div>
+        }
+      </div>
+
+      @if (errorMsg()) {
+        <div class="login-error">{{ errorMsg() }}</div>
+      }
+
+      <button type="submit" class="login-btn" [disabled]="loginForm.invalid">Log In</button>
+    </form>
+
+    <p class="hint">Don't have an account? <a routerLink="/">Continue as guest</a></p>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --accent:      #8b0000;
+  --accent-mid:  #a80000;
+  --accent-hot:  #c0392b;
+  --accent-glow: rgba(139,0,0,0.35);
+  --bg:          #080000;
+  --surface:     #120000;
+  --surface2:    #1c0000;
+  --surface3:    #260000;
+  --border:      #380000;
+  --muted:       #7a4a4a;
+  --text-dim:    #c49898;
+  --text-sub:    #8a5a5a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Figtree', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: #fff;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+a { transition: color 0.2s; }
+button { font-family: inherit; }

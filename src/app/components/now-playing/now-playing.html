@@ -1,0 +1,34 @@
+<div class="np-page">
+  @if (musicService.currentTrack(); as track) {
+    <div class="np-container">
+      <img [src]="track.coverUrl" [alt]="track.title" class="np-cover" />
+      <div class="np-info">
+        <span class="np-genre">{{ track.genre | uppercase }}</span>
+        <h1 class="np-title">{{ track.title }}</h1>
+        <h2 class="np-artist">{{ track.artist }}</h2>
+        @if (track.releaseDate) {
+          <p class="np-release">Released {{ track.releaseDate | date:'longDate' }}</p>
+        }
+        <div class="np-progress">
+          <span>{{ audioService.formatTime(audioService.currentTime()) }}</span>
+          <input type="range" [value]="progress" min="0" max="100" (input)="onSeek($event)" class="np-bar" />
+          <span>{{ track.duration }}</span>
+        </div>
+        <div class="np-controls">
+          <button (click)="prev()">⏮</button>
+          <button class="np-play" (click)="toggle()">{{ audioService.isPlaying() ? '⏸' : '▶' }}</button>
+          <button (click)="next()">⏭</button>
+        </div>
+        <div class="np-volume">
+          <span>🔊</span>
+          <input type="range" min="0" max="100" [value]="audioService.volume()" (input)="onVolume($event)" class="np-bar" />
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="np-empty">
+      <span>🎵</span>
+      <p>Nothing is playing yet. Go pick a song!</p>
+    </div>
+  }
+</div>

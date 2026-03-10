@@ -1,0 +1,107 @@
+<div class="playlist-page">
+  <div class="page-header">
+    <h1 class="page-title">Your Playlists</h1>
+    <button class="create-btn" (click)="showCreateForm = !showCreateForm">
+      {{ showCreateForm ? 'Cancel' : '+ New Playlist' }}
+    </button>
+  </div>
+
+  <!-- Reactive Form: Create Playlist -->
+  @if (showCreateForm) {
+    <div class="create-form-card">
+      <h2>Create New Playlist</h2>
+      <form [formGroup]="playlistForm" (ngSubmit)="createPlaylist()">
+        <div class="form-field">
+          <label>Playlist Name *</label>
+          <input type="text" formControlName="name" placeholder="e.g. Morning Vibes" class="form-input" />
+          @if (nameControl.invalid && nameControl.touched) {
+            <div class="error-msg">
+              @if (nameControl.errors?.['required']) { Name is required. }
+              @if (nameControl.errors?.['minlength']) { At least 3 characters. }
+              @if (nameControl.errors?.['maxlength']) { Max 50 characters. }
+            </div>
+          }
+        </div>
+        <div class="form-field">
+          <label>Description *</label>
+          <textarea formControlName="description" placeholder="Describe your playlist..." class="form-input" rows="3"></textarea>
+          @if (descControl.invalid && descControl.touched) {
+            <div class="error-msg">
+              @if (descControl.errors?.['required']) { Description is required. }
+              @if (descControl.errors?.['minlength']) { At least 5 characters. }
+            </div>
+          }
+        </div>
+        <button type="submit" class="submit-btn">Create Playlist</button>
+      </form>
+    </div>
+  }
+
+  @if (!selectedPlaylist) {
+    <!-- Playlist grid -->
+    @if (playlists.length === 0) {
+      <div class="empty-state">
+        <span>🎵</span>
+        <p>No playlists yet. Create your first one!</p>
+      </div>
+    }
+    <div class="playlists-grid">
+      @for (pl of playlists; track pl.id) {
+        <div class="playlist-card" (click)="selectPlaylist(pl)">
+          <div class="playlist-cover">🎵</div>
+          <div class="playlist-info">
+            <h3>{{ pl.name }}</h3>
+            <p class="pl-desc">{{ pl.description }}</p>
+            <p class="pl-meta">{{ pl.songs.length }} songs • {{ pl.createdAt | date:'mediumDate' }}</p>
+          </div>
+          <button class="delete-pl-btn" (click)="$event.stopPropagation(); deletePlaylist(pl.id)">🗑</button>
+        </div>
+      }
+    </div>
+  } @else {
+    <!-- Playlist detail view -->
+    <div class="playlist-detail">
+      <button class="back-btn" (click)="clearSelection()">← Back</button>
+      <div class="pl-header">
+        <div class="pl-cover-lg">🎵</div>
+        <div>
+          <h2>{{ selectedPlaylist.name }}</h2>
+          <p class="pl-desc">{{ selectedPlaylist.description }}</p>
+          <p class="pl-meta">{{ selectedPlaylist.songs.length }} songs</p>
+        </div>
+      </div>
+
+      <!-- Songs in playlist -->
+      <h3 class="section-label">Songs in Playlist</h3>
+      @if (selectedPlaylist.songs.length === 0) {
+        <p class="empty-label">No songs yet. Add from below.</p>
+      }
+      @for (song of selectedPlaylist.songs; track song.id) {
+        <div class="song-row">
+          <img [src]="song.coverUrl" [alt]="song.title" class="song-thumb" (click)="playSong(song)">
+          <div class="song-row-info" (click)="playSong(song)">
+            <span class="song-row-title">{{ song.title }}</span>
+            <span class="song-row-artist">{{ song.artist }}</span>
+          </div>
+          <span class="song-row-dur">{{ song.duration }}</span>
+          <button class="remove-btn" (click)="removeSong(song.id)">✕</button>
+        </div>
+      }
+
+      <!-- Add songs from library -->
+      <h3 class="section-label">Add Songs</h3>
+      <div class="add-songs-grid">
+        @for (song of availableSongs(); track song.id) {
+          <div class="add-song-card" (click)="addSong(song)">
+            <img [src]="song.coverUrl" [alt]="song.title" class="add-song-img">
+            <div class="add-song-info">
+              <span>{{ song.title }}</span>
+              <span class="add-song-artist">{{ song.artist }}</span>
+            </div>
+            <span class="add-icon">+</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

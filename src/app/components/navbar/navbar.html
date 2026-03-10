@@ -1,0 +1,36 @@
+<nav class="navbar">
+  <a routerLink="/" class="logo">
+    <div class="logo-icon">♪</div>
+    <span>Harmony<strong>Stream</strong></span>
+  </a>
+
+  <div class="nav-links">
+    <a routerLink="/"           routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+      <span class="nav-icon">🏠</span> Home
+    </a>
+    <a routerLink="/artists"    routerLinkActive="active">
+      <span class="nav-icon">🎤</span> Artists
+    </a>
+    <a routerLink="/playlists"  routerLinkActive="active">
+      <span class="nav-icon">🎵</span> Playlists
+    </a>
+    <a routerLink="/now-playing" routerLinkActive="active">
+      <span class="nav-icon">▶</span> Now Playing
+    </a>
+  </div>
+
+  <div class="nav-right">
+    <button class="icon-action" (click)="toggleTheme()" [title]="userService.isDarkMode() ? 'Light mode' : 'Dark mode'">
+      {{ userService.isDarkMode() ? '☀️' : '🌙' }}
+    </button>
+    @if (userService.isLoggedIn()) {
+      <div class="user-badge">
+        <span class="user-avatar">{{ userService.username().charAt(0).toUpperCase() }}</span>
+        <span class="user-name">{{ userService.username() }}</span>
+      </div>
+      <button class="logout-btn" (click)="logout()">Sign out</button>
+    } @else {
+      <a routerLink="/login" class="signin-btn">Sign in</a>
+    }
+  </div>
+</nav>

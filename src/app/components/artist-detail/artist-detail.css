@@ -1,0 +1,48 @@
+.artists-page { padding: 80px 56px 120px; }
+.page-title { color: #fff; font-size: 2.2rem; font-weight: 900; margin-bottom: 32px; }
+.artists-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.artist-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px 20px;
+  cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.artist-card:hover { background: var(--surface2); border-color: rgba(192,57,43,0.4); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(139,0,0,0.2); }
+.artist-img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px; display: block; border: 3px solid var(--border); }
+.artist-card:hover .artist-img { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+.artist-info h3 { color: #fff; font-size: 1rem; margin: 0 0 6px; }
+.track-count { color: var(--text-sub); font-size: 0.78rem; }
+
+.back-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); padding: 8px 18px; border-radius: 20px; cursor: pointer; margin-bottom: 32px; transition: all 0.2s; }
+.back-btn:hover { border-color: var(--accent-hot); color: #fff; }
+
+.artist-detail-view { }
+.artist-header {
+  display: flex; gap: 40px; align-items: flex-end; margin-bottom: 48px;
+  padding: 40px; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(139,0,0,0.15), transparent);
+  border: 1px solid var(--border);
+}
+.detail-img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); box-shadow: 0 0 40px var(--accent-glow); }
+.artist-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 3px; color: var(--accent-hot); text-transform: uppercase; }
+.artist-meta h1 { font-size: 3rem; font-weight: 900; margin: 8px 0 12px; }
+.artist-bio { color: var(--text-dim); max-width: 500px; line-height: 1.6; font-size: 0.9rem; }
+.artist-stats { color: var(--text-sub); font-size: 0.85rem; margin-top: 12px; }
+
+.top-tracks h2 { color: #fff; margin-bottom: 16px; font-size: 1.2rem; }
+.track-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 14px; border-radius: 8px; cursor: pointer; transition: background 0.15s; border: 1px solid transparent;
+}
+.track-row:hover { background: rgba(139,0,0,0.08); border-color: var(--border); }
+.track-num { color: var(--text-sub); width: 24px; text-align: center; font-size: 0.85rem; }
+.track-thumb { width: 46px; height: 46px; border-radius: 6px; object-fit: cover; }
+.track-info { flex: 1; }
+.track-name { display: block; color: #fff; font-size: 0.9rem; font-weight: 600; }
+.track-genre { color: var(--accent-hot); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
+.track-dur { color: var(--text-dim); font-size: 0.82rem; }
+.play-row-btn {
+  background: var(--accent); border: none; color: #fff;
+  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+  font-size: 0.8rem; opacity: 0; transition: opacity 0.2s;
+}
+.track-row:hover .play-row-btn { opacity: 1; }

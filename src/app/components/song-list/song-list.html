@@ -1,0 +1,243 @@
+<div class="home-page">
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-grain"></div>
+    </div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">🔥 Chart Toppers 2024</span>
+      <h1 class="hero-title">South Indian<br><em class="hero-accent">Greatest Hits</em></h1>
+      <p class="hero-sub">45 tracks · Anirudh · Arijit · Sid Sriram · Sanjith & more</p>
+      <div class="hero-stats">
+        <div class="stat-pill"><span class="stat-num">45</span><span class="stat-label">Songs</span></div>
+        <div class="stat-pill"><span class="stat-num">6</span><span class="stat-label">Artists</span></div>
+        <div class="stat-pill"><span class="stat-num">6</span><span class="stat-label">Genres</span></div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-primary" (click)="playSong(featuredSongs[0])">
+          <span>▶</span> Play All
+        </button>
+        <a routerLink="/playlists" class="btn-outline">+ New Playlist</a>
+        <a routerLink="/artists" class="btn-ghost">View Artists →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="vinyl-outer">
+        <div class="vinyl-ring"></div>
+        <div class="vinyl-center" (click)="playSong(featuredSongs[0])">
+          <img [src]="featuredSongs[0]?.coverUrl" [alt]="featuredSongs[0]?.title">
+          <div class="vinyl-play">▶</div>
+        </div>
+      </div>
+      <div class="hero-mini-stack">
+        @for (song of featuredSongs.slice(1); track song.id; let i = $index) {
+          <div class="mini-stack-item" (click)="playSong(song)"
+            [style.transform]="'translateY(' + (i * -8) + 'px) scale(' + (1 - i * 0.04) + ')'">
+            <img [src]="song.coverUrl" [alt]="song.title">
+            <span>{{ song.title }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TRENDING ══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-dot"></span>
+        <h2 class="section-title">Trending Now</h2>
+      </div>
+      <span class="section-count">{{ trendingSongs.length }} tracks</span>
+    </div>
+    <div class="scroll-cards">
+      @for (song of trendingSongs; track song.id) {
+        <div class="song-card" [appHighlightPlaying]="isPlaying(song)" (click)="playSong(song)">
+          <div class="card-img-wrap">
+            <img [src]="song.coverUrl" [alt]="song.title" class="card-img" loading="lazy">
+            <div class="card-overlay">
+              <div class="card-play-circle">{{ isPlaying(song) ? '⏸' : '▶' }}</div>
+            </div>
+            <div class="card-genre-tag" [style.background]="getGenreColor(song.genre)">{{ song.genre }}</div>
+            @if (isPlaying(song)) {
+              <div class="eq-badge"><span></span><span></span><span></span></div>
+            }
+          </div>
+          <div class="card-body">
+            <p class="card-title">{{ song.title }}</p>
+            <p class="card-artist">{{ song.artist }}</p>
+            <p class="card-year">{{ song.releaseDate | date:'yyyy' }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ══ FEATURED TRACKS (large list) ══ -->
+  <section class="section section-dark">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-dot"></span>
+        <h2 class="section-title">Featured Tracks</h2>
+      </div>
+      <span class="section-count">Top picks</span>
+    </div>
+    <div class="featured-list">
+      @for (song of rockSongs; track song.id; let i = $index) {
+        <div class="featured-row" [class.feat-active]="isPlaying(song)" (click)="playSong(song)">
+          <div class="feat-left">
+            <div class="feat-num-wrap">
+              @if (isPlaying(song)) {
+                <div class="bars-mini"><span></span><span></span><span></span></div>
+              } @else {
+                <span class="feat-num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+              }
+            </div>
+            <img [src]="song.coverUrl" [alt]="song.title" class="feat-img" loading="lazy">
+            <div class="feat-info">
+              <span class="feat-title">{{ song.title }}</span>
+              <span class="feat-artist">{{ song.artist }}</span>
+            </div>
+          </div>
+          <div class="feat-right">
+            <span class="feat-genre" [style.color]="getGenreColor(song.genre)">{{ song.genre }}</span>
+            <span class="feat-date">{{ song.releaseDate | date:'MMM d, yyyy' }}</span>
+            <span class="feat-dur">{{ song.duration }}</span>
+            <button class="feat-play-btn">{{ isPlaying(song) ? '⏸' : '▶' }}</button>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ══ ROMANTIC VIBES ══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-dot red"></span>
+        <h2 class="section-title">Romantic Vibes ❤️</h2>
+      </div>
+      <span class="section-count">{{ romanticSongs.length }} songs</span>
+    </div>
+    <div class="wide-cards">
+      @for (song of romanticSongs; track song.id) {
+        <div class="wide-card" [class.wide-active]="isPlaying(song)" (click)="playSong(song)">
+          <img [src]="song.coverUrl" [alt]="song.title" class="wide-img" loading="lazy">
+          <div class="wide-info">
+            <span class="wide-title">{{ song.title }}</span>
+            <span class="wide-artist">{{ song.artist }}</span>
+          </div>
+          <span class="wide-dur">{{ song.duration }}</span>
+          @if (isPlaying(song)) {
+            <div class="bars-mini inline-bars"><span></span><span></span><span></span></div>
+          } @else {
+            <button class="wide-play">▶</button>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ══ ARTIST SPOTLIGHTS ══ -->
+  <section class="section section-dark">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-dot"></span>
+        <h2 class="section-title">Artist Spotlight</h2>
+      </div>
+      <a routerLink="/artists" class="see-all-link">See all artists →</a>
+    </div>
+    <div class="artist-spotlight-grid">
+      @for (group of artistGroups; track group.name) {
+        <div class="spotlight-card">
+          <div class="spotlight-header">
+            <img [src]="group.songs[0]?.coverUrl" [alt]="group.name" class="spotlight-avatar">
+            <div>
+              <h3 class="spotlight-name">{{ group.name }}</h3>
+              <p class="spotlight-count">{{ group.songs.length }}+ tracks</p>
+            </div>
+            <a routerLink="/artists" class="spotlight-arrow">→</a>
+          </div>
+          <div class="spotlight-tracks">
+            @for (song of group.songs; track song.id; let i = $index) {
+              <div class="spotlight-row" (click)="playSong(song)">
+                <span class="sp-num">{{ i + 1 }}</span>
+                <span class="sp-title">{{ song.title }}</span>
+                <span class="sp-dur">{{ song.duration }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ══ MELODY & SOUL ══ -->
+  @if (melodySongs.length > 0) {
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-dot"></span>
+          <h2 class="section-title">Melody & Soul 🎼</h2>
+        </div>
+        <span class="section-count">{{ melodySongs.length }} tracks</span>
+      </div>
+      <div class="scroll-cards">
+        @for (song of melodySongs; track song.id) {
+          <div class="song-card melody-card" [appHighlightPlaying]="isPlaying(song)" (click)="playSong(song)">
+            <div class="card-img-wrap">
+              <img [src]="song.coverUrl" [alt]="song.title" class="card-img" loading="lazy">
+              <div class="card-overlay">
+                <div class="card-play-circle">{{ isPlaying(song) ? '⏸' : '▶' }}</div>
+              </div>
+              <div class="card-genre-tag" [style.background]="getGenreColor(song.genre)">{{ song.genre }}</div>
+            </div>
+            <div class="card-body">
+              <p class="card-title">{{ song.title }}</p>
+              <p class="card-artist">{{ song.artist }}</p>
+              <p class="card-year">{{ song.releaseDate | date:'yyyy' }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
+  <!-- ══ ALL SONGS — Complete Library ══ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-dot"></span>
+        <h2 class="section-title">Complete Library</h2>
+      </div>
+      <span class="section-count">{{ songs.length }} songs total</span>
+    </div>
+    <div class="library-grid">
+      @for (song of songs; track song.id; let i = $index) {
+        <div class="lib-row" [class.lib-active]="isPlaying(song)" (click)="playSong(song)">
+          <div class="lib-left">
+            @if (isPlaying(song)) {
+              <div class="bars-mini sm"><span></span><span></span><span></span></div>
+            } @else {
+              <span class="lib-num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+            }
+            <img [src]="song.coverUrl" [alt]="song.title" class="lib-img" loading="lazy">
+            <div class="lib-info">
+              <span class="lib-title">{{ song.title }}</span>
+              <span class="lib-artist">{{ song.artist }}</span>
+            </div>
+          </div>
+          <div class="lib-right">
+            <span class="lib-genre" [style.color]="getGenreColor(song.genre)">{{ song.genre | uppercase }}</span>
+            <span class="lib-dur">{{ song.duration }}</span>
+            <button class="lib-play">{{ isPlaying(song) ? '⏸' : '▶' }}</button>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+</div>

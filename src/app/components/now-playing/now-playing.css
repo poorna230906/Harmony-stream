@@ -1,0 +1,19 @@
+.np-page { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 160px); padding: 80px 56px 120px; }
+.np-container { display: flex; gap: 60px; align-items: center; max-width: 820px; width: 100%; }
+.np-cover { width: 320px; height: 320px; border-radius: 16px; object-fit: cover; box-shadow: 0 20px 60px rgba(139,0,0,0.4), 0 0 0 1px var(--border); flex-shrink: 0; }
+.np-info { flex: 1; }
+.np-genre { color: var(--accent-hot); font-size: 0.72rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; }
+.np-title { color: #fff; font-size: 2.8rem; font-weight: 900; margin: 10px 0; letter-spacing: -1px; line-height: 1.1; }
+.np-artist { color: var(--text-dim); font-size: 1.2rem; font-weight: 400; margin: 0 0 10px; }
+.np-release { color: var(--text-sub); font-size: 0.82rem; margin-bottom: 28px; }
+.np-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; color: var(--text-sub); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.np-bar { flex: 1; cursor: pointer; accent-color: var(--accent-hot); }
+.np-controls { display: flex; align-items: center; gap: 28px; margin-bottom: 24px; }
+.np-controls button { background: none; border: none; color: var(--text-dim); font-size: 1.5rem; cursor: pointer; transition: color 0.2s, transform 0.15s; }
+.np-controls button:hover { color: #fff; transform: scale(1.15); }
+.np-play { background: linear-gradient(135deg, var(--accent-mid), var(--accent-hot)) !important; color: #fff !important; width: 60px; height: 60px; border-radius: 50% !important; font-size: 1.3rem !important; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px var(--accent-glow); }
+.np-play:hover { filter: brightness(1.15); transform: scale(1.08) !important; }
+.np-volume { display: flex; align-items: center; gap: 12px; color: var(--text-dim); }
+.np-empty { text-align: center; color: var(--text-sub); display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.np-empty span { font-size: 5rem; opacity: 0.3; }
+.np-empty p { font-size: 1.1rem; }

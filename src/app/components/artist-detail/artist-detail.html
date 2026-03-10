@@ -1,0 +1,44 @@
+<div class="artists-page">
+  @if (!selectedArtist) {
+    <h1 class="page-title">Artists</h1>
+    <div class="artists-grid">
+      @for (artist of artists; track artist.id) {
+        <div class="artist-card" (click)="selectArtist(artist)">
+          <img [src]="artist.imageUrl" [alt]="artist.name" class="artist-img">
+          <div class="artist-info">
+            <h3>{{ artist.name }}</h3>
+            <p class="track-count">{{ artist.topTracks.length }} tracks</p>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="artist-detail-view">
+      <button class="back-btn" (click)="clearSelection()">← Back to Artists</button>
+      <div class="artist-header">
+        <img [src]="selectedArtist.imageUrl" [alt]="selectedArtist.name" class="detail-img">
+        <div class="artist-meta">
+          <p class="artist-label">ARTIST</p>
+          <h1>{{ selectedArtist.name }}</h1>
+          <p class="artist-bio">{{ selectedArtist.bio }}</p>
+          <p class="artist-stats">{{ selectedArtist.topTracks.length }} tracks</p>
+        </div>
+      </div>
+      <div class="top-tracks">
+        <h2>Top Tracks</h2>
+        @for (song of selectedArtist.topTracks; track song.id; let i = $index) {
+          <div class="track-row" (click)="playSong(song)">
+            <span class="track-num">{{ i + 1 }}</span>
+            <img [src]="song.coverUrl" [alt]="song.title" class="track-thumb">
+            <div class="track-info">
+              <span class="track-name">{{ song.title }}</span>
+              <span class="track-genre">{{ song.genre | uppercase }}</span>
+            </div>
+            <span class="track-dur">{{ song.duration }}</span>
+            <button class="play-row-btn">▶</button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
